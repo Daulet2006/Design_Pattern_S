@@ -1,11 +1,255 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
-autonumber
+' General settings
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+    ArrowColor Black
+}
+skinparam stereotypeCBackgroundColor #DDDDDD
+hide circle
+hide empty members
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+' Packages
+package "DandA.kz" {
+  package command <<Rectangle>> {
+    interface Command {
+      +execute(Order order)
+    }
+    class CancelOrderCommand {
+      +execute(Order order)
+    }
+    class DeliverOrderCommand {
+      +execute(Order order)
+    }
+    class PrepareOrderCommand {
+      +execute(Order order)
+    }
+    class OrderCommandExecutor {
+      +executeCommand(Command command, Order order)
+    }
+  }
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+  package controller <<Rectangle>> {
+    class OrderController {
+      +getAllOrders()
+      +getOrderById()
+      +createOrder()
+      +updateOrder()
+      +deleteOrder()
+      +searchOrdersByCustomerName()
+      +updateOrderStatus()
+      +executeOrderCommand()
+    }
+  }
+
+  package dto <<Rectangle>> {
+    class OrderDTO {
+      -Long id
+      -String customerName
+      -String contactInfo
+      -OrderStatus status
+      -String orderType
+      -LocalDateTime orderTime
+      -Long customerId
+      -Long stateId
+    }
+    class CustomerDTO {
+      -Long id
+      -String name
+      -String contactInfo
+      -List<OrderDTO> orders
+    }
+  }
+
+  package exception <<Rectangle>> {
+    class GlobalExceptionHandler {
+      +handleIllegalArgumentException()
+      +handleDataAccessException()
+    }
+  }
+
+  package factory <<Rectangle>> {
+    abstract class OrderFactory {
+      +createOrder(String customerName, String contactInfo)
+    }
+    class DeliveryOrderFactory {
+      +createOrder(String customerName, String contactInfo)
+    }
+    class DineInOrderFactory {
+      +createOrder(String customerName, String contactInfo)
+    }
+  }
+
+  package model <<Rectangle>> {
+    enum OrderStatus {
+      RECEIVED
+      PREPARING
+      READY
+      DELIVERED
+      CANCELED
+    }
+    class Order {
+      -Long id
+      -String customerName
+      -String contactInfo
+      -OrderStatus status
+      -String orderType
+      -LocalDateTime orderTime
+      -OrderState state
+      -Long stateId
+      -Customer customer
+      +getCustomerId()
+    }
+    class Customer {
+      -Long id
+      -String name
+      -String contactInfo
+      -List<Order> orders
+    }
+  }
+
+  package repository <<Rectangle>> {
+    interface CustomerRepository {
+      +findByName(String name)
+    }
+    interface OrderRepository {
+      +findByCustomerName(String customerName)
+      +findByCustomerNameContainingIgnoreCase(String customerName)
+    }
+    interface StateRepository {
+    }
+    interface StrategyRepository {
+    }
+  }
+
+  package service <<Rectangle>> {
+    class DtoMapper {
+      +toOrderDTO(Order order)
+      +toOrderEntity(OrderDTO orderDTO)
+    }
+    package facade <<Rectangle>> {
+      interface OrderServiceFacade {
+        +getAllOrders()
+        +getOrderById()
+        +createOrder()
+        +updateOrder()
+        +deleteOrder()
+        +findOrdersByCustomerName()
+        +updateOrderStatus()
+        +executeCommand()
+      }
+      class OrderServiceFacadeImpl {
+        +getAllOrders()
+        +getOrderById()
+        +createOrder()
+        +updateOrder()
+        +deleteOrder()
+        +findOrdersByCustomerName()
+        +updateOrderStatus()
+        +executeCommand()
+      }
+    }
+  }
+
+  package state <<Rectangle>> {
+    abstract class OrderState {
+      -Long id
+      +next(Order order)
+      +previous(Order order)
+      +getStatus()
+    }
+    class ReceivedState {
+      +next(Order order)
+      +previous(Order order)
+      +getStatus()
+    }
+    class PreparingState {
+      +next(Order order)
+      +previous(Order order)
+      +getStatus()
+    }
+    class ReadyState {
+      +next(Order order)
+      +previous(Order order)
+      +getStatus()
+    }
+    class DeliveredState {
+      +next(Order order)
+      +previous(Order order)
+      +getStatus()
+    }
+    class CanceledState {
+      +next(Order order)
+      +previous(Order order)
+      +getStatus()
+    }
+  }
+
+  package strategy <<Rectangle>> {
+    interface OrderStrategy {
+      +processOrder()
+    }
+    abstract class OrderStrategyEntity {
+      -Long id
+      +processOrder()
+    }
+    class DeliveryStrategy {
+      +processOrder()
+    }
+    class DineInStrategy {
+      +processOrder()
+    }
+    class TakeawayStrategy {
+      +processOrder()
+    }
+  }
+}
+
+' Relationships
+' Command Pattern
+Command <|.. CancelOrderCommand
+Command <|.. DeliverOrderCommand
+Command <|.. PrepareOrderCommand
+OrderCommandExecutor o-- Command
+
+' Controller
+OrderController --> OrderServiceFacade
+OrderController --> DtoMapper
+
+' DTO
+DtoMapper --> Order
+DtoMapper --> OrderDTO
+DtoMapper --> StateRepository
+
+' Factory Pattern
+OrderFactory <|-- DeliveryOrderFactory
+OrderFactory <|-- DineInOrderFactory
+
+' Model
+Order --> OrderStatus
+Order --> OrderState
+Order --> Customer
+Customer "1" *-- "many" Order
+
+' Repository
+OrderServiceFacadeImpl --> OrderRepository
+OrderServiceFacadeImpl --> CustomerRepository
+OrderServiceFacadeImpl --> StateRepository
+OrderServiceFacade <|.. OrderServiceFacadeImpl
+
+' State Pattern
+OrderState <|-- ReceivedState
+OrderState <|-- PreparingState
+OrderState <|-- ReadyState
+OrderState <|-- DeliveredState
+OrderState <|-- CanceledState
+Order --> OrderState
+
+' Strategy Pattern
+OrderStrategy <|.. OrderStrategyEntity
+OrderStrategyEntity <|-- DeliveryStrategy
+OrderStrategyEntity <|-- DineInStrategy
+OrderStrategyEntity <|-- TakeawayStrategy
+
 @enduml
