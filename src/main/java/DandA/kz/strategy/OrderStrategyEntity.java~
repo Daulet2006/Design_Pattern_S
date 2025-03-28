@@ -1,0 +1,4 @@
+package DandA.kz.strategy;
+
+public class OrderStrategyEntity {
+}

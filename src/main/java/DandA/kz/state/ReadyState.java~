@@ -5,21 +5,21 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("PREPARING")
-public class PreparingState extends OrderState {
+@DiscriminatorValue("READY")
+public class ReadyState extends OrderState {
 
     @Override
     public void next(Order order) {
-        order.setState(new ReadyState());
+        order.setState(new DeliveredState()); // Assuming DeliveredState exists
     }
 
     @Override
     public void previous(Order order) {
-        order.setState(new ReceivedState());
+        order.setState(new PreparingState()); // Assuming PreparingState exists
     }
 
     @Override
     public String getStatus() {
-        return "PREPARING";
+        return "READY";
     }
 }

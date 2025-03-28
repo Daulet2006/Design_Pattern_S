@@ -1,20 +1,21 @@
 package DandA.kz.state;
 
 import DandA.kz.model.Order;
-import DandA.kz.model.OrderStatus;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
-public class ReadyState implements OrderState {
+@Entity
+@DiscriminatorValue("READY")
+public class ReadyState extends OrderState {
 
     @Override
     public void next(Order order) {
-        order.setStatus(OrderStatus.DELIVERED);
-        System.out.println("Заказ уже доставлен.");
+        order.setState(new DeliveredState()); // Transition to DeliveredState
     }
 
     @Override
     public void previous(Order order) {
-        order.setStatus(OrderStatus.PREPARING);
-        order.setState(new PreparingState());
+        order.setState(new PreparingState()); // Transition back to PreparingState
     }
 
     @Override
