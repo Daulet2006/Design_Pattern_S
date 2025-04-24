@@ -1,0 +1,54 @@
+<!--index.html-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Employee Management</title>
+-   <link
++     <link rel="stylesheet" th:href="@{/css/styles.css}" />
+-     rel="stylesheet"
+-   />
++   <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body class="bg-gray-100 p-6 text-gray-800">
+    <div class="max-w-2xl mx-auto bg-white shadow-md rounded-xl p-8">
+      <h1 class="text-3xl font-bold text-center mb-6">
+        Welcome to Employee Manager
+      </h1>
+
+      <div class="flex flex-col space-y-4">
+        <a
+          href="/employees"
+          class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-center"
+        >
+          Сотрудники
+        </a>
+        <a
+          href="/projects"
+          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-center"
+        >
+          Проекты
+        </a>
+        <a
+          href="/addresses"
+          class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded text-center"
+        >
+          Адреса
+        </a>
+        <a
+          href="/departments"
+          class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded text-center"
+        >
+          Отделы
+        </a>
+      </div>
+      <a
+        href="/employees/group-view"
+        class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-center"
+      >
+        View Group Salary
+      </a>
+    </div>
+  </body>
+- </html>
++ </html>

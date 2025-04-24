@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Сотрудники отдела</title>
+    <link
+      rel="stylesheet" th:href="@{/css/styles.css}"
+    />
+  </head>
+  <body class="bg-gray-100 p-6">
+    <div class="container mx-auto">
+      <h1 class="text-2xl font-bold mb-4">
+        Сотрудники отдела: <span th:text="${department.name}"></span>
+      </h1>
+      <table class="min-w-full bg-white shadow-md rounded mb-4">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">ID</th>
+            <th class="py-2 px-4 border-b">Имя</th>
+            <th class="py-2 px-4 border-b">Должность</th>
+            <th class="py-2 px-4 border-b">Тип</th>
+            <th class="py-2 px-4 border-b">Базовая зарплата</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="employee : ${employees}">
+            <td class="py-2 px-4 border-b" th:text="${employee.id}"></td>
+            <td class="py-2 px-4 border-b" th:text="${employee.name}"></td>
+            <td class="py-2 px-4 border-b" th:text="${employee.position}"></td>
+            <td class="py-2 px-4 border-b" th:text="${employee.type}"></td>
+            <td
+              class="py-2 px-4 border-b"
+              th:text="${employee.baseSalary}"
+            ></td>
+          </tr>
+        </tbody>
+      </table>
+      <a th:href="@{/departments}" class="text-gray-700 hover:underline"
+        >Назад к отделам</a
+      >
+    </div>
+  </body>
+</html>

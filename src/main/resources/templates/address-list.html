@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Список адресов</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body class="bg-gray-100 p-6">
+    <div class="container mx-auto">
+      <h1 class="text-2xl font-bold mb-4">Список адресов</h1>
+      <a href="/addresses/add" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4 inline-block">Добавить адрес</a>
+      <table class="min-w-full bg-white shadow-md rounded mb-4">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">ID</th>
+            <th class="py-2 px-4 border-b">Город</th>
+            <th class="py-2 px-4 border-b">Улица</th>
+            <th class="py-2 px-4 border-b">Здание</th>
+            <th class="py-2 px-4 border-b">Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="address : ${addresses}" class="hover:bg-gray-100">
+            <td class="py-2 px-4 border-b" th:text="${address.id}"></td>
+            <td class="py-2 px-4 border-b" th:text="${address.city}"></td>
+            <td class="py-2 px-4 border-b" th:text="${address.street}"></td>
+            <td class="py-2 px-4 border-b" th:text="${address.building}"></td>
+            <td class="py-2 px-4 border-b">
+              <a href="#" class="text-blue-500 hover:underline" th:href="@{'/addresses/' + ${address.id}}">Просмотр</a> |
+              <a href="#" class="text-yellow-500 hover:underline" th:href="@{'/addresses/edit/' + ${address.id}}">Редактировать</a> |
+              <a href="#" class="text-red-500 hover:underline" th:href="@{'/addresses/delete/' + ${address.id}}" onclick="return confirm('Удалить адрес?');">Удалить</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="/" class="text-blue-500 hover:text-blue-800">На главную</a>
+    </div>
+  </body>
+</html>

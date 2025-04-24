@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Форма адреса</title>
+-   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
++   <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body class="bg-gray-100 p-6">
+    <div class="container mx-auto">
+      <h1 class="text-2xl font-bold mb-4" th:text="${address.id} != null ? 'Редактировать адрес' : 'Создать адрес'"></h1>
+      <form th:action="${address.id} != null ? @{'/addresses/edit/' + ${address.id}} : @{/addresses/add}" th:object="${address}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="city">Город:</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="city" name="city" type="text" th:field="*{city}" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="street">Улица:</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="street" name="street" type="text" th:field="*{street}" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="building">Здание:</label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="building" name="building" type="text" th:field="*{building}" required>
+        </div>
+        <div class="flex items-center justify-between">
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Сохранить</button>
+          <a href="/addresses" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">К списку адресов</a>
+        </div>
+      </form>
+      <a href="/" class="text-blue-500 hover:text-blue-800">На главную</a>
+    </div>
+  </body>
+</html>

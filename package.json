@@ -1,0 +1,16 @@
+{
+  "name": "daulet-and-altyndana",
+  "version": "1.0.0",
+  "description": "Spring Boot + TailwindCSS CRUD project",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/styles.css --minify",
+    "watch:css": "tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/styles.css --watch",
+    "dev": "npm run build:css"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.3.5"
+  }
+}

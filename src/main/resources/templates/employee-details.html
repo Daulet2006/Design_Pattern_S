@@ -1,0 +1,27 @@
+<!--employee-details.html-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Employee Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body class="bg-gray-100 text-gray-800 p-6">
+    <div class="max-w-xl mx-auto bg-white rounded-xl shadow-md p-8">
+      <h1 class="text-2xl font-bold mb-4 text-center">Employee Details</h1>
+      <p><strong>ID:</strong> <span th:text="${employee.id}"></span></p>
+      <p><strong>Name:</strong> <span th:text="${employee.name}"></span></p>
+      <p>
+        <strong>Position:</strong> <span th:text="${employee.position}"></span>
+      </p>
+      <p>
+        <strong>Base Salary:</strong>
+        <span th:text="${employee.baseSalary}"></span>
+      </p>
+      <p>
+        <strong>Calculated Salary:</strong>
+        <span class="text-green-600 font-semibold" th:text="${salary}"></span>
+      </p>
+    </div>
+  </body>
+</html>

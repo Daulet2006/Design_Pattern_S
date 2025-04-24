@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Детали проекта</title>
+  </head>
+  <body>
+    <h1>Детали проекта</h1>
+    <p>ID: <span th:text="${project.id}"></span></p>
+    <p>Название: <span th:text="${project.name}"></span></p>
+    <p>Описание: <span th:text="${project.description}"></span></p>
+    <a th:href="@{'/projects/edit/' + ${project.id}}">Редактировать</a> |
+    <a
+      th:href="@{'/projects/delete/' + ${project.id}}"
+      onclick="return confirm('Удалить проект?');"
+      >Удалить</a
+    ><br /><a th:href="@{/projects}">К списку проектов</a> |
+    <a th:href="@{/}">На главную</a>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<!--group-salaty.html-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Group Salary</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body class="bg-gray-50 p-6">
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md p-8">
+      <h2 class="text-xl font-semibold text-center mb-4">Total Group Salary</h2>
+      <p
+        class="text-center text-green-600 text-2xl font-bold"
+        th:text="${totalGroupSalary}"
+      ></p>
+    </div>
+  </body>
+</html>

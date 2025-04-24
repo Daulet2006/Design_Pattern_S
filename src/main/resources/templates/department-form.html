@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Форма отдела</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body class="bg-gray-100 p-6">
+    <div class="container mx-auto">
+      <h1
+        class="text-2xl font-bold mb-4"
+        th:text="${department.id} != null ? 'Редактировать отдел' : 'Добавить отдел'"
+      ></h1>
+      <form
+        th:action="${department.id} != null ? @{'/departments/edit/' + ${department.id}} : @{/departments/add}"
+        th:object="${department}"
+        method="post"
+        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      >
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="name"
+            >Название отдела</label
+          >
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            name="name"
+            type="text"
+            th:field="*{name}"
+            required
+          />
+        </div>
+        <div class="flex items-center justify-between">
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Сохранить
+          </button>
+          <a
+            href="/departments"
+            class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+            >Назад к списку</a
+          >
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

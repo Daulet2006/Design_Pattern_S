@@ -1,0 +1,12 @@
+<!--error.html-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ошибка</title>
+</head>
+<body>
+<h1 th:text="${errorMessage != null} ? ${errorMessage} : 'Произошла ошибка'"></h1>
+<p>Проверьте правильность URL или попробуйте позже.</p>
+</body>
+</html>
